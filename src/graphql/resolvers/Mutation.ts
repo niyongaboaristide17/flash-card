@@ -8,7 +8,6 @@ import { compare } from '../../helper/encryption';
 export const Mutation = {
 	createUser: async (parent: any, args: any, context: any) => {
 		const user = args.input;
-		console.log(context.token);
 		return await createUser(user);
 	},
 
@@ -20,8 +19,9 @@ export const Mutation = {
 	login: async (parent: any, args: any) => {
 		const user: User | undefined | null = await findOneUserByEmail(args.input.email)
 		if (user) {
+			
 			if (compare(args.input.password, user.password)) {
-				const accessToken = generateAccessToken(user.id)
+				const accessToken = await generateAccessToken(user.id)
 				return {
 					accessToken,
 				}

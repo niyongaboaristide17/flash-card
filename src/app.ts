@@ -1,6 +1,6 @@
 import startApolloServer from './server';
 
-const app = async () => {
+const app = async (): Promise<void> => {
 	startApolloServer()
 }
 

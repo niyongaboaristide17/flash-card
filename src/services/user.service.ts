@@ -25,3 +25,11 @@ export const findOneUserByEmail = async (email: string): Promise<User | undefine
 		}
 	)
 }
+
+export const findOneUserById = async (id: number): Promise<User | undefined | null> => {
+	return await prisma.user.findUnique(
+		{
+			where: { id: Number(id) },
+		}
+	)
+}
