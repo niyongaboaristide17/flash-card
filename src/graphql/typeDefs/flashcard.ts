@@ -13,7 +13,6 @@ export const flashcardTypeDefs = gql`
 	input CreateFlashcardInput {
 		title: String!
 		description: String!
-		userId: Int!
   	}
 
 `

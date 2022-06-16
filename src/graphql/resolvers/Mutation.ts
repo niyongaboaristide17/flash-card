@@ -4,6 +4,7 @@ import { createUser, findOneUserByEmail } from '../../services/user.service';
 import { User } from '../../models/User';
 import { generateAccessToken } from '../../helper/jwtHandler';
 import { compare } from '../../helper/encryption';
+import { FlashcardInput } from '../../models/Flashcard';
 
 export const Mutation = {
 	createUser: async (parent: any, args: any, context: any) => {
@@ -11,8 +12,12 @@ export const Mutation = {
 		return await createUser(user);
 	},
 
-	createFlashcard: async (parent: any, args: any) => {
-		const flashcard = args.input;
+	createFlashcard: async (parent: any, args: any, context: any) => {
+		if (context.isLoggedIn === false) {
+			throw new Error("UNAUTHORIZED REQUEST");
+		}
+		const flashcard: FlashcardInput = args.input;
+		flashcard.userId = Number(context.user.id);
 		return await createFlashcard(flashcard);
 	},
 

@@ -11,5 +11,5 @@ export type Flashcard = {
 export type FlashcardInput = {
 	title : string
 	description : string
-	userId : number
+	userId: number
 }
