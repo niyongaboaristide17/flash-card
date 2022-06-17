@@ -19,3 +19,17 @@ export const findAllFlashcards = async (): Promise<Flashcard[]> => {
 		}
 	)
 }
+
+
+export const findAllFlashcardsByUser = async (userId: number): Promise<Flashcard[]> => {
+	return await prisma.flashcard.findMany(
+		{
+			where: {
+				userId: userId,
+			},
+			include: {
+				user: true,
+			},
+		}
+	)
+}

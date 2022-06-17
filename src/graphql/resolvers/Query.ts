@@ -1,6 +1,6 @@
 import _ from 'lodash';
 import { findAllUsers } from '../../services/user.service';
-import { findAllFlashcards } from '../../services/flashcard.service';
+import { findAllFlashcards, findAllFlashcardsByUser } from '../../services/flashcard.service';
 import { User } from '../../models/User';
 import { Flashcard } from '../../models/Flashcard';
 
@@ -16,5 +16,12 @@ export const Query = {
 			throw new Error("UNAUTHORIZED REQUEST");
 		}
 		return await findAllFlashcards()
+	},
+
+	userFlashcards: async (parent: any, args: any, context: any): Promise<Flashcard[]> => {
+		if (context.isLoggedIn === false) {
+			throw new Error("UNAUTHORIZED REQUEST");
+		}
+		return await findAllFlashcardsByUser(Number(context.user.id))
 	}
 }
