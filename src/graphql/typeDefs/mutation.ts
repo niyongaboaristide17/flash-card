@@ -5,6 +5,7 @@ export const mutationTypeDefs = gql`
 		createUser(input: CreateUserInput!): CreatedUser
 		createFlashcard(input: CreateFlashcardInput!): CreatedFlashcard
 		markFlashcardAsDone(input: ID!): CreatedFlashcard
+		deleteFlashcard(input: ID!): CreatedFlashcard
 		login(input: Credential!): Token
   	}
 

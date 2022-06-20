@@ -1,5 +1,5 @@
 import _ from "lodash";
-import { createFlashcard, findOneFlashcardById, markFlashcardAsDone } from '../../services/flashcard.service';
+import { createFlashcard, findOneFlashcardById, markFlashcardAsDone, deleteFlashcard } from '../../services/flashcard.service';
 import { createUser, findOneUserByEmail } from '../../services/user.service';
 import { User } from '../../models/User';
 import { generateAccessToken } from '../../helper/jwtHandler';
@@ -9,6 +9,10 @@ import { FlashcardInput, Flashcard } from '../../models/Flashcard';
 export const Mutation = {
 	createUser: async (parent: any, args: any, context: any) => {
 		const user = args.input;
+		const u = await findOneUserByEmail(user.email);
+		if (u) {
+			throw new Error("USER ALREADY EXISTS");
+		}
 		return await createUser(user);
 	},
 
@@ -33,6 +37,21 @@ export const Mutation = {
 			throw new Error("UNAUTHORIZED NOT FOUND");
 		}
 		return await markFlashcardAsDone(Number(args.input))
+	},
+
+	deleteFlashcard: async (parent: any, args: any, context: any) => {
+		if (context.isLoggedIn === false) {
+			throw new Error("UNAUTHENTICATED USER");
+		}
+		const flashcard: Flashcard | undefined | null = await findOneFlashcardById(Number(args.input));
+		if (flashcard === null || flashcard === undefined) {
+			throw new Error("FLASHCARD NOT FOUND");
+		}
+		if (flashcard.userId !== context.user.id) {
+			throw new Error("UNAUTHORIZED NOT FOUND");
+		}
+		
+		return await deleteFlashcard(Number(args.input))
 	},
 
 	login: async (parent: any, args: any) => {

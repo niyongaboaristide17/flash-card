@@ -1,6 +1,6 @@
 import _ from 'lodash';
 import { findAllUsers } from '../../services/user.service';
-import { findAllFlashcards, findAllFlashcardsByUser } from '../../services/flashcard.service';
+import { findAllFlashcards, findAllFlashcardsByUser, findOneFlashcardById } from '../../services/flashcard.service';
 import { User } from '../../models/User';
 import { Flashcard } from '../../models/Flashcard';
 
@@ -16,6 +16,20 @@ export const Query = {
 			throw new Error("UNAUTHORIZED REQUEST");
 		}
 		return await findAllFlashcards()
+	},
+
+	flashcard: async (parent: any, args: any, context: any): Promise<Flashcard | null | undefined> => {
+		if (context.isLoggedIn === false) {
+			throw new Error("UNAUTHENTICATED USER REQUEST");
+		}
+		const flashcard = await findOneFlashcardById(Number(args.input))
+		if (flashcard === undefined || flashcard === null) {
+			throw new Error("FLASHCARD NOT FOUND");
+		}
+		if (flashcard.userId !== context.user.id) {
+			throw new Error("UNAUTHORIZED REQUEST");
+		}
+		return flashcard
 	},
 
 	userFlashcards: async (parent: any, args: any, context: any): Promise<Flashcard[]> => {

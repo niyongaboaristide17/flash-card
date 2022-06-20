@@ -27,19 +27,30 @@ export const findOneFlashcardById = async (id: number): Promise<Flashcard | unde
 	return await prisma.flashcard.findUnique(
 		{
 			where: { id: id },
+			include: {
+				user: true
+			}
 		}
-)
+	)
 }
 
 export const markFlashcardAsDone = async (id: number): Promise<Flashcard | undefined | null> => {
 	return await prisma.flashcard.update(
 		{
 			where: { id: id },
-			data:{
+			data: {
 				isDone: true,
 			}
 		}
-)
+	)
+}
+
+export const deleteFlashcard = async (id: number): Promise<Flashcard | undefined | null> => {
+	return await prisma.flashcard.delete(
+		{
+			where: { id: id },
+		}
+	)
 }
 
 
