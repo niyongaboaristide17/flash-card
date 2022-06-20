@@ -4,9 +4,12 @@ import { Flashcard, FlashcardInput } from '../models/Flashcard';
 const prisma = new PrismaClient()
 
 export const createFlashcard = async (flashcard: FlashcardInput): Promise<Flashcard> => {
-	
+
 	return await prisma.flashcard.create({
-		data: flashcard
+		data: flashcard,
+		include: {
+			user: true
+		}
 	})
 }
 
@@ -18,6 +21,25 @@ export const findAllFlashcards = async (): Promise<Flashcard[]> => {
 			},
 		}
 	)
+}
+
+export const findOneFlashcardById = async (id: number): Promise<Flashcard | undefined | null> => {
+	return await prisma.flashcard.findUnique(
+		{
+			where: { id: id },
+		}
+)
+}
+
+export const markFlashcardAsDone = async (id: number): Promise<Flashcard | undefined | null> => {
+	return await prisma.flashcard.update(
+		{
+			where: { id: id },
+			data:{
+				isDone: true,
+			}
+		}
+)
 }
 
 

@@ -11,12 +11,10 @@ export const isAuthenticated = async (token: string): Promise<any> => {
 		if(user){
 			return { isLoggedIn: true, user: user}
 		}
-		console.log(t);
 		
 		return { isLoggedIn: false}
 
 	} catch (error) {
-		// console.log(t);
 		return { isLoggedIn: false}
 	}
 }

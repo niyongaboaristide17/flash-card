@@ -21,7 +21,10 @@ export const findAllUsers = async (): Promise<User[]> => {
 export const findOneUserByEmail = async (email: string): Promise<User | undefined | null> => {
 	return await prisma.user.findUnique(
 		{
-			where: { email: email}
+			where: { email: email},
+			include: {
+				flashcards: true
+			}
 		}
 	)
 }
@@ -30,6 +33,9 @@ export const findOneUserById = async (id: number): Promise<User | undefined | nu
 	return await prisma.user.findUnique(
 		{
 			where: { id: Number(id) },
+			include: {
+				flashcards: true
+			}
 		}
 	)
 }

@@ -8,6 +8,11 @@ export const userTypeDefs = gql`
 		flashcards: [Flashcard]
 	}
 
+	type CreatedUser {
+		id: ID!
+		name: String!
+		email: String!
+	}
 
 	input CreateUserInput {
 		name: String!

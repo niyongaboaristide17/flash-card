@@ -4,7 +4,8 @@ export const queryTypeDefs = gql`
 	type Query {
 		users: [User!]!
 		flashcards: [Flashcard]!
-		userFlashcards: [Flashcard]!
+		userFlashcards(order: SortBy): [Flashcard]!
+		
   	}
 
 `

@@ -7,6 +7,15 @@ export const flashcardTypeDefs = gql`
 		title: String!
 		description: String!
 		user: User!
+		isDone: Boolean
+		userId: Int!
+	}
+
+	type CreatedFlashcard {
+		id: ID!
+		title: String!
+		description: String!
+		isDone: Boolean
 		userId: Int!
 	}
 

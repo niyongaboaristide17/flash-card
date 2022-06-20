@@ -22,6 +22,12 @@ export const Query = {
 		if (context.isLoggedIn === false) {
 			throw new Error("UNAUTHORIZED REQUEST");
 		}
-		return await findAllFlashcardsByUser(Number(context.user.id))
+		const flashcards: Flashcard[] = await findAllFlashcardsByUser(Number(context.user.id))
+		
+		if (args.order) {
+			return _.orderBy(flashcards,['title'], [args.order,]);
+		}
+
+		return flashcards 
 	}
 }

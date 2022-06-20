@@ -5,6 +5,7 @@ export type Flashcard = {
 	title : string
 	description : string
 	user?: User
+	isDone : boolean
 	userId : number
 }
 
