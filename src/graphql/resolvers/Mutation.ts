@@ -1,5 +1,5 @@
 import _ from "lodash";
-import { createFlashcard, findOneFlashcardById, markFlashcardAsDone, deleteFlashcard } from '../../services/flashcard.service';
+import { createFlashcard, findOneFlashcardById, markFlashcardAsDone, deleteFlashcard, updateFlashcard } from '../../services/flashcard.service';
 import { createUser, findOneUserByEmail } from '../../services/user.service';
 import { User } from '../../models/User';
 import { generateAccessToken } from '../../helper/jwtHandler';
@@ -52,6 +52,21 @@ export const Mutation = {
 		}
 		
 		return await deleteFlashcard(Number(args.input))
+	},
+
+	updateFlashcard: async (parent: any, args: any, context: any) => {
+		if (context.isLoggedIn === false) {
+			throw new Error("UNAUTHENTICATED USER");
+		}
+		const flashcard: Flashcard | undefined | null = await findOneFlashcardById(Number(args.id));
+		if (flashcard === null || flashcard === undefined) {
+			throw new Error("FLASHCARD NOT FOUND");
+		}
+		if (flashcard.userId !== context.user.id) {
+			throw new Error("UNAUTHORIZED NOT FOUND");
+		}
+		
+		return await updateFlashcard(Number(args.id), args.input)
 	},
 
 	login: async (parent: any, args: any) => {

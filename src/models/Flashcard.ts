@@ -14,3 +14,8 @@ export type FlashcardInput = {
 	description : string
 	userId: number
 }
+
+export type FlashcardUpdateInput = {
+	title? : string
+	description? : string
+}

@@ -1,5 +1,5 @@
 import { PrismaClient } from "@prisma/client";
-import { Flashcard, FlashcardInput } from '../models/Flashcard';
+import { Flashcard, FlashcardInput, FlashcardUpdateInput } from '../models/Flashcard';
 
 const prisma = new PrismaClient()
 
@@ -49,6 +49,16 @@ export const deleteFlashcard = async (id: number): Promise<Flashcard | undefined
 	return await prisma.flashcard.delete(
 		{
 			where: { id: id },
+		}
+	)
+}
+export const updateFlashcard = async (id: number, object: FlashcardUpdateInput): Promise<Flashcard | undefined | null> => {
+	return await prisma.flashcard.update(
+		{
+			where: { id: id },
+			data: {
+				...object
+			}
 		}
 	)
 }

@@ -24,4 +24,9 @@ export const flashcardTypeDefs = gql`
 		description: String!
   	}
 
+	input UpdateFlashcardInput {
+		title: String
+		description: String
+  	}
+
 `
