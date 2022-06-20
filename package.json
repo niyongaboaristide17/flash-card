@@ -5,6 +5,9 @@
   "repository": "git@github.com:niyongaboaristide17/flash-card.git",
   "author": "Niyongabo Aristide <niyongaboaristide17@gmail.com>",
   "license": "MIT",
+  "engines": {
+    "node": "16.14.2"
+  },
   "scripts": {
     "build": "better-npm-run build",
     "start": "better-npm-run production",
