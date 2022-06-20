@@ -7,7 +7,7 @@ const startApolloServer = (): void => {
 	new ApolloServer({
 		typeDefs,
 		resolvers,
-		csrfPrevention: true,
+		// csrfPrevention: true,
 		context: ({req}:any)=>{
 			const token: string = req.headers.authorization || ''
 			return isAuthenticated(token)
